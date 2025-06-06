@@ -1,0 +1,52 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# VSCode settings (опціонально)
+.vscode/
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Logs and history
+.history/
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Ignore compiled model or large generated files
+*.h5
+*.pt
+*.pth
+*.pkl
+*.joblib
+
+# Ignore local databases
+*.sqlite3
+*.db
+
+# Ignore temporary or install logs
+pip-log.txt
+
+# Ignore cache inside these folders
+templates/__pycache__/
+static/__pycache__/
+
+# Ignore sensitive or constant config file
+constants.py

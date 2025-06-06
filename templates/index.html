@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>StockOracle | Predict Your Investments</title>
+  <meta name="description" content="Predict stock market trends with precision">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" sizes="16x16" href="/api/placeholder/32/32" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/google-fonts/1.0.0/index.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2D46B9;
+      --secondary: #1A2F80;
+      --accent: #41E9B5;
+      --dark: #1A1B25;
+      --light: #F9FAFF;
+      --success: #4BB543;
+      --danger: #DC3545;
+      --warning: #FFC107;
+      --info: #17A2B8;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Navbar Styles */
+    .navbar {
+      background-color: rgba(26, 27, 37, 0.97);
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand img {
+      height: 80px;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-toggler {
+      border: none;
+      color: var(--light);
+    }
+    
+    .nav-link {
+      color: var(--light) !important;
+      font-weight: 500;
+      margin: 0 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+    
+    .prediction-form {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 50px rgba(26, 27, 37, 0.1);
+      padding: 40px;
+      margin-top: -80px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .prediction-form h2 {
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .form-control {
+      height: 55px;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      border: 2px solid #e1e5ee;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.25rem rgba(45, 70, 185, 0.25);
+    }
+    
+    .btn-predict {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      height: 55px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 10px 30px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-predict:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(26, 47, 128, 0.3);
+    }
+    
+    .stock-icon {
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 20px;
+      top: 20px;
+    }
+    
+    .features {
+      padding: 100px 0;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      height: 100%;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(26, 27, 37, 0.05);
+      border-bottom: 4px solid transparent;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(26, 27, 37, 0.1);
+      border-bottom: 4px solid var(--accent);
+    }
+    
+    .feature-icon {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      color: white;
+      font-size: 1.8rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    footer {
+      background-color: var(--dark);
+      color: var(--light);
+      padding: 80px 0 30px;
+    }
+    
+    .footer-logo img {
+      height: 50px;
+      margin-bottom: 20px;
+    }
+    
+    .footer-links h5 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--accent);
+    }
+    
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-links li {
+      margin-bottom: 15px;
+    }
+    
+    .footer-links a {
+      color: var(--light);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent);
+      padding-left: 5px;
+    }
+    
+    .footer-links i {
+      margin-right: 10px;
+      color: var(--accent);
+    }
+    
+    .social-links {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      color: var(--light);
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--accent);
+      color: var(--dark);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 50px;
+      padding-top: 20px;
+      text-align: center;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(26, 47, 128, 0.3);
+    }
+    
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--secondary);
+      transform: translateY(-5px);
+    }
+    
+    .alert-danger {
+      background-color: rgba(220, 53, 69, 0.1);
+      border-color: var(--danger);
+      color: var(--danger);
+      border-radius: 8px;
+      padding: 15px;
+    }
+    
+    .map-container {
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .chat-bot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .chat-window {
+      width: 350px;
+      height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: none; 
+    }
+
+    .chat-window iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .chat-toggle-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(26, 47, 128, 0.3);
+      transition: all 0.3s ease;
+      margin-left: auto; 
+    }
+
+    .chat-toggle-button:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 576px) {
+      .chat-window {
+        width: 300px;
+        height: 450px;
+      }
+    }
+
+    
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      
+      .prediction-form {
+        margin-top: 50px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 100px 0 60px;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .features {
+        padding: 60px 0;
+      }
+      
+      .feature-card {
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="http://localhost/www/wordpress-5.6.2/wordpress/">
+        <img src="static/stockOracle3.png" alt="StockOracle Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:5000">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:5000">DASHBOARD</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:5000/about">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:5000">CONTACT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 hero-content">
+          <h1>Predict the Future of Your Investments</h1>
+          <p>Use advanced AI and machine learning algorithms to forecast stock price movements and make informed investment decisions.</p>
+        </div>
+        <div class="col-lg-5">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4CC9F0" />
+                <stop offset="50%" stop-color="#4361EE" />
+                <stop offset="100%" stop-color="#3A0CA3" />
+              </linearGradient>
+              <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F72585" />
+                <stop offset="100%" stop-color="#7209B7" />
+              </linearGradient>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+            
+            <g transform="translate(40, 40) scale(3.5)">
+              <g opacity="0.3">
+                <line x1="0" y1="40" x2="80" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="0" y1="30" x2="80" y2="30" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="0" y1="20" x2="80" y2="20" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="0" y1="10" x2="80" y2="10" stroke="#3A0CA3" stroke-width="0.5" />
+                
+                <line x1="10" y1="0" x2="10" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="20" y1="0" x2="20" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="30" y1="0" x2="30" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="40" y1="0" x2="40" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="50" y1="0" x2="50" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="60" y1="0" x2="60" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+                <line x1="70" y1="0" x2="70" y2="40" stroke="#3A0CA3" stroke-width="0.5" />
+              </g>
+              
+              <path d="M0,40 L10,35 L20,30 L30,32 L40,25 L50,15 L60,10 L70,5 L80,15 L80,40 Z" fill="url(#mainGradient)" opacity="0.25" />
+              
+              <polyline id="mainGraph" points="0,40 10,35 20,30 30,32 40,25 50,15 60,10 70,5 80,15" stroke="url(#mainGradient)" stroke-width="4" fill="none" stroke-linecap="round" filter="url(#glow)" />
+              
+              <g>
+                <rect x="12" y="25" width="6" height="10" fill="url(#accentGradient)" rx="1" filter="url(#shadow)" />
+                <line x1="15" y1="20" x2="15" y2="25" stroke="#F72585" stroke-width="2.5" />
+                <line x1="15" y1="35" x2="15" y2="38" stroke="#F72585" stroke-width="2.5" />
+                
+                <rect x="32" y="27" width="6" height="8" fill="#4CC9F0" rx="1" filter="url(#shadow)" />
+                <line x1="35" y1="22" x2="35" y2="27" stroke="#4CC9F0" stroke-width="2.5" />
+                <line x1="35" y1="35" x2="35" y2="37" stroke="#4CC9F0" stroke-width="2.5" />
+                
+                <rect x="52" y="10" width="6" height="15" fill="url(#accentGradient)" rx="1" filter="url(#shadow)" />
+                <line x1="55" y1="5" x2="55" y2="10" stroke="#F72585" stroke-width="2.5" />
+                <line x1="55" y1="25" x2="55" y2="28" stroke="#F72585" stroke-width="2.5" />
+              </g>
+              
+              <circle class="data-point" cx="10" cy="35" r="3" fill="#F72585" />
+              <circle class="data-point" cx="20" cy="30" r="3" fill="#F72585" />
+              <circle class="data-point" cx="30" cy="32" r="3" fill="#F72585" />
+              <circle class="data-point" cx="40" cy="25" r="3.5" fill="#F72585" />
+              <circle class="data-point" cx="50" cy="15" r="3" fill="#F72585" />
+              <circle class="data-point" cx="60" cy="10" r="4" fill="#F72585" />
+              <circle class="data-point" cx="70" cy="5" r="3" fill="#F72585" />
+              <circle class="data-point" cx="80" cy="15" r="3.5" fill="#F72585" />
+              
+              <path d="M40,25 Q60,5 80,15" stroke="#4CC9F0" stroke-width="2" stroke-dasharray="3,2" fill="none" />
+              <path d="M10,35 L80,15" stroke="#F72585" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.7" />
+            </g>
+            
+           
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="prediction-form">
+            <h2>Enter a Stock Symbol to Predict</h2>
+            {% if not_found %}
+            <div class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-circle me-2"></i> Stock Symbol (Ticker) Not Found. Please Enter a Valid Stock Symbol
+            </div>
+            {% endif %}
+            <form action="{{ url_for('insertintotable') }}" method="POST">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control" name="nm" placeholder="Company Stock Symbol (e.g., AAPL, MSFT)">
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-predict">
+                  <i class="fas fa-bolt me-2"></i> PREDICT THE FUTURE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col-12">
+          <h2 class="fw-bold mb-3">Why Choose StockOracle</h2>
+          <p class="lead">Our predictive model uses cutting-edge technology to provide accurate stock forecasts</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3>Advanced Analytics</h3>
+            <p>Our platform uses sophisticated algorithms to analyze market trends and historical data for accurate predictions.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Real-Time Data</h3>
+            <p>Get predictions based on the latest market information with our real-time data processing capability.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Reliable Results</h3>
+            <p>Our model has been tested against historical data to ensure the highest level of prediction accuracy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="chat-bot-container" id="chatBotContainer">
+    <div class="chat-window" id="chatWindow">
+      <iframe src="https://copilotstudio.microsoft.com/environments/Default-70a28522-969b-451f-bdb2-abfea3aaa5bf/bots/crc2d_compNews/webchat?__version__=2" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+    </div>
+    
+    <div class="chat-toggle-button" id="chatToggleButton">
+      <i class="fas fa-comments" id="chatBotIcon"></i>
+      <i class="fas fa-times" id="closeIcon" style="display: none;"></i>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="footer-logo">
+            <img src="static/stockOracle3.png" alt="StockOracle Logo">
+          </div>
+          <p>StockOracle was started with a common goal of serving the finance community while they make transitions. All our team members bring to table their unique expertise and experience of stock market which they would like to pass on to future investors.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+          <div class="footer-links">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><a href="http://127.0.0.1:5000"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="http://127.0.0.1:5000"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+              <li><a href="http://127.0.0.1:5000/about"><i class="fas fa-chevron-right"></i> About</a></li>
+              <li><a href="http://127.0.0.1:5000"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-links">
+            <h5>Contact Us</h5>
+            <ul>
+              <li>
+                <a href="#">
+                  <i class="fas fa-map-marker-alt"></i> StockOracle, Office, Lviv, 
+                </a>
+              </li>
+              <li>
+                <a href="mailto:taras.konopka@lnu.edu.uа">
+                  <i class="fas fa-envelope"></i> taras.konopka@lnu.edu.ua
+                </a>
+              </li>
+              <li>
+                <a href="tel:++38098*******">
+                  <i class="fas fa-phone-alt"></i> +38098*******
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="mt-4 map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25736.700143278166!2d24.006707!3d49.841952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add6c2b0d24d3%3A0xb2642ed6e814d555!2z0JvRg9Cz0LDQtNC40L3QsA!5e0!3m2!1sen!2sua!4v1714731123456!5m2!1sen!2sua"; width="100%" height="100%" style="border:0;" allowfullscreen="false"></iframe>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 StockOracle. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top" id="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTopButton = document.getElementById('back-to-top');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('show');
+        } else {
+          backToTopButton.classList.remove('show');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      });
+      
+      const navbar = document.querySelector('.navbar');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          navbar.style.padding = '10px 0';
+          navbar.style.backgroundColor = 'rgba(26, 27, 37, 0.97)';
+        } else {
+          navbar.style.padding = '15px 0';
+          navbar.style.backgroundColor = 'rgba(26, 27, 37, 0.9)';
+        }
+      });
+      
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatToggleButton = document.getElementById('chatToggleButton');
+      const chatWindow = document.getElementById('chatWindow');
+      const chatBotIcon = document.getElementById('chatBotIcon');
+      const closeIcon = document.getElementById('closeIcon');
+      
+      chatToggleButton.addEventListener('click', function() {
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+          chatWindow.style.display = 'block';
+          chatBotIcon.style.display = 'none';
+          closeIcon.style.display = 'block';
+        } else {
+          chatWindow.style.display = 'none';
+          chatBotIcon.style.display = 'block';
+          closeIcon.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

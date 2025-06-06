@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="About Stock Oracle - Advanced Stock Price Prediction Tool">
+    <meta name="author" content="Stock Oracle">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='stockOracle3.png') }}">
+    <title>About Stock Oracle</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap.min-RES.css') }}" rel="stylesheet">
+    
+    <link href="{{ url_for('static', filename='stock-oracle-styles.css') }}" rel="stylesheet">
+    
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: var(--card-border-radius);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIC8+PC9zdmc+');
+            opacity: 0.4;
+        }
+        
+        .about-hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .about-hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-heading h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-heading h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(45, 70, 185, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background-color: rgba(45, 70, 185, 0.1);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .feature-text {
+            color: #555;
+            line-height: 1.6;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .model-card {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(45, 70, 185, 0.2);
+        }
+        
+        .model-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .model-header h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .model-body {
+            padding: 25px;
+        }
+        
+        .model-description {
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .model-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .model-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .model-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .model-features i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .team-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(45, 70, 185, 0.2);
+        }
+        
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 30px auto 20px;
+            overflow: hidden;
+            border: 5px solid rgba(45, 70, 185, 0.1);
+        }
+        
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-info {
+            padding: 0 20px 30px;
+        }
+        
+        .team-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .team-role {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        
+        .team-bio {
+            color: #555;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .team-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f2ff;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .team-social a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .stat-item {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 30px 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(45, 70, 185, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: rgba(45, 70, 185, 0.1);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .timeline-left {
+            left: 0;
+        }
+        
+        .timeline-right {
+            left: 50%;
+        }
+        
+        .timeline-left::after {
+            right: -13px;
+        }
+        
+        .timeline-right::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .timeline-content:hover {
+            box-shadow: 0 15px 35px rgba(45, 70, 185, 0.2);
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-text {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--card-border-radius);
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIC8+PC9zdmc+');
+            opacity: 0.4;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta-text {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .faq-section {
+            margin: 60px 0;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            background-color: #f8f9ff;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background-color: #f0f2ff;
+        }
+        
+        .faq-question::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '\f106';
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 1000px;
+        }
+        
+        @media (max-width: 992px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-left::after, .timeline-right::after {
+                left: 18px;
+            }
+            
+            .timeline-right {
+                left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 36px;
+            }
+            
+            .about-hero p {
+                font-size: 16px;
+            }
+            
+            .section-heading h2 {
+                font-size: 28px;
+            }
+            
+            .cta-title {
+                font-size: 28px;
+            }
+            
+            .cta-text {
+                font-size: 16px;
+            }
+            
+            .cta-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .about-hero {
+                padding: 40px 0;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .model-header h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="svg-background">
+            <svg class="bg-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4CC9F0" stop-opacity="0.05" />
+                        <stop offset="50%" stop-color="#4361EE" stop-opacity="0.03" />
+                        <stop offset="100%" stop-color="#3A0CA3" stop-opacity="0.05" />
+                    </linearGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#mainGradient)"/>
+                <g stroke="#3A0CA3" stroke-width="1" opacity="0.07">
+                    <g id="verticalLines"></g>
+                    <g id="horizontalLines"></g>
+                </g>
+                <g id="chartPatterns" opacity="0.2" filter="url(#glow)"></g>
+            </svg>
+        </div>
+
+        <header class="app-header">
+            <div class="container-fluid">
+                <div class="header-content">
+                    <div class="logo-container">
+                        <a href="http://localhost/www/wordpress-5.6.2/wordpress/">
+                            <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle Logo" class="logo">
+                            <span class="logo-text">Stock Oracle</span>
+                        </a>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="http://127.0.0.1:5000"><i class="fas fa-chart-line"></i> Predict</a></li>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/know-more/" class="active"><i class="fas fa-info-circle"></i> About</a></li>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/home-2/#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="mobile-nav-overlay" id="mobileNavOverlay">
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-header">
+                    <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle Logo" class="mobile-logo">
+                    <button class="close-nav" id="closeNav">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="http://127.0.0.1:5000"><i class="fas fa-home"></i> HOME</a></li>
+                        <li><a href="http://127.0.0.1:5000"><i class="fas fa-chart-line"></i> PREDICT THE FUTURE</a></li>
+                        <li><a href="http://127.0.0.1:5000"><i class="fas fa-tachometer-alt"></i> DASHBOARD</a></li>
+                        <li><a href="http://127.0.0.1:5000" class="active"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+                        <li><a href="http://127.0.0.1:5000"><i class="fas fa-envelope"></i> CONTACT US</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-wrapper">
+                
+                <div class="about-hero">
+                    <div class="about-hero-content">
+                        <h1>Revolutionizing Stock Prediction</h1>
+                        <p>Stock Oracle combines advanced machine learning models, real-time data analysis, and sentiment evaluation to provide accurate stock price predictions and market insights.</p>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Our Mission</h2>
+                </div>
+                <div class="card" style="margin-bottom: 40px;">
+                    <div class="card-content" style="flex-direction: column; text-align: center; padding: 40px;">
+                        <div class="card-icon" style="font-size: 3rem; width: 100px; height: 100px; margin-bottom: 30px;">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="card-info">
+                            <p style="font-size: 18px; line-height: 1.8; max-width: 800px; margin: 0 auto; color: #555;">
+                                At Stock Oracle, we're on a mission to democratize financial market prediction through innovative technology. We believe that accurate stock forecasting should be accessible to everyone, from professional traders to individual investors. By harnessing the power of cutting-edge neural networks and machine learning algorithms, we're bringing institutional-grade analysis tools to your fingertips.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Key Features</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="feature-title">Multiple Neural Models</h3>
+                            <p class="feature-text">We employ a diverse set of advanced neural network architectures to analyze market patterns and predict future stock movements with exceptional accuracy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <h3 class="feature-title">Sentiment Analysis</h3>
+                            <p class="feature-text">Our system analyzes thousands of tweets and financial news articles in real-time to gauge market sentiment and its potential impact on stock prices.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="feature-title">Multi-timeframe Forecasting</h3>
+                            <p class="feature-text">Get accurate predictions for various time horizons, from next-day price movements to 7-day forecasts, helping you plan both short and medium-term trading strategies.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="feature-title">Model Validation</h3>
+                            <p class="feature-text">We transparently display each model's accuracy metrics, allowing you to understand prediction reliability and make informed investment decisions.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3 class="feature-title">Real-time Updates</h3>
+                            <p class="feature-text">Our prediction models continuously learn from new market data, ensuring that forecasts remain relevant in rapidly changing market conditions.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3 class="feature-title">Smart Recommendations</h3>
+                            <p class="feature-text">Receive actionable insights based on comprehensive analysis of prediction models and sentiment data, helping you make better trading decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Stock Oracle in Numbers</h2>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number">7+</div>
+                        <div class="stat-label">Prediction Models</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Max Prediction Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Tweets Analyzed Daily</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Supported Stocks</div>
+                    </div>
+                </div>
+                <div class="section-heading">
+                    <h2>Our Prediction Models</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h3>LSTM Model</h3>
+                            </div>
+                            <div class="model-body">
+                                <p class="model-description">
+                                    Our Long Short-Term Memory (LSTM) neural network excels at capturing long-term dependencies in time series data, making it ideal for stock price prediction.
+                                </p>
+                                <ul class="model-features">
+                                    <li><i class="fas fa-check-circle"></i> Pattern recognition in time series</li>
+                                    <li><i class="fas fa-check-circle"></i> 89% average accuracy rate</li>
+                                    <li><i class="fas fa-check-circle"></i> Excellent for medium-term forecasting</li>
+                                    <li><i class="fas fa-check-circle"></i> Processes 5 years of historical data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h3>GRU Model</h3>
+                            </div>
+                            <div class="model-body">
+                                <p class="model-description">
+                                    Our Gated Recurrent Unit (GRU) model provides efficient computation while maintaining high accuracy for short-term price predictions.
+                                </p>
+                                <ul class="model-features">
+                                    <li><i class="fas fa-check-circle"></i> Faster training and execution</li>
+                                    <li><i class="fas fa-check-circle"></i> 87% average accuracy rate</li>
+                                    <li><i class="fas fa-check-circle"></i> Specialized for short-term forecasting</li>
+                                    <li><i class="fas fa-check-circle"></i> Advanced vanishing gradient handling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h3>Transformer Model</h3>
+                            </div>
+                            <div class="model-body">
+                                <p class="model-description">
+                                    Our state-of-the-art Transformer model utilizes attention mechanisms to identify complex relationships between market variables.
+                                </p>
+                                <ul class="model-features">
+                                    <li><i class="fas fa-check-circle"></i> Self-attention mechanism</li>
+                                    <li><i class="fas fa-check-circle"></i> 92% peak accuracy rate</li>
+                                    <li><i class="fas fa-check-circle"></i> Multi-timeframe predictions</li>
+                                    <li><i class="fas fa-check-circle"></i> Integration of market sentiment data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Our Journey</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">October 2024</div>
+                            <h3 class="timeline-title">Project Inception</h3>
+                            <p class="timeline-text">Stock Oracle begins as a research project focused on applying neural networks to financial markets.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">December 2024</div>
+                            <h3 class="timeline-title">First LSTM Model</h3>
+                            <p class="timeline-text">Successfully developed our first LSTM model with promising accuracy rates on major market indices.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">January 2025</div>
+                            <h3 class="timeline-title">Sentiment Analysis Integration</h3>
+                            <p class="timeline-text">Integrated social media sentiment analysis to enhance prediction accuracy by capturing market psychology.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">February 2025</div>
+                            <h3 class="timeline-title">Beta Platform Launch</h3>
+                            <p class="timeline-text">Released our prediction platform to a select group of beta testers with phenomenal feedback.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">April 2025</div>
+                            <h3 class="timeline-title">Transformer Model Integration</h3>
+                            <p class="timeline-text">Implemented our cutting-edge Transformer model, achieving our highest prediction accuracy to date.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">May 2025</div>
+                            <h3 class="timeline-title">Public Launch</h3>
+                            <p class="timeline-text">Officially launched Stock Oracle to the public with support for over 500 stocks across global markets.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Meet Our Team</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <img src="{{url_for('static', filename='myphoto.jpg')}}" alt="Taras Konopka">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Taras Konopka</h3>
+                            <p class="team-role">Founder & Lead Data Scientist</p>
+                            <p class="team-bio">Full-stack developer with 1 year of experience in financial modeling and machine learning, now applying analytical skills to software development.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-heading">
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-question">How accurate are your stock predictions?</div>
+                        <div class="faq-answer">
+                            <p>Our prediction models achieve varying levels of accuracy depending on the market conditions and timeframe. On average, our models maintain 85-92% accuracy for next-day predictions and 78-85% for 7-day forecasts. We transparently display each model's accuracy metrics so you can assess reliability yourself.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How often are predictions updated?</div>
+                        <div class="faq-answer">
+                            <p>Our prediction models are updated daily after market close to incorporate the latest market data. Sentiment analysis is performed continuously throughout trading hours, with updates every 30 minutes.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Which stocks do you support?</div>
+                        <div class="faq-answer">
+                            <p>We currently support over 500 stocks, primarily focusing on major U.S. exchanges (NYSE and NASDAQ), including all stocks in the S&P 500 index. We're continuously expanding our coverage to include more international markets and smaller-cap stocks.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I use Stock Oracle for investment decisions?</div>
+                        <div class="faq-answer">
+                            <p>Stock Oracle provides predictions and insights that can be valuable for informing investment decisions, but we always recommend using our tool as part of a comprehensive investment strategy. No prediction model can guarantee future results, and all investment decisions should be made with careful consideration of your financial situation and risk tolerance.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How does sentiment analysis work?</div>
+                        <div class="faq-answer">
+                            <p>Our sentiment analysis system processes thousands of tweets, news articles, and financial reports daily. Using advanced natural language processing techniques, we evaluate the sentiment (positive, neutral, or negative) expressed about specific stocks and the broader market. This sentiment data is then integrated with our technical models to provide a more comprehensive prediction.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-content">
+                        <h2 class="cta-title">Start Making Smarter Investment Decisions Today</h2>
+                        <p class="cta-text">Leverage the power of advanced neural networks and sentiment analysis to enhance your trading strategy and portfolio performance.</p>
+                        <a href="http://127.0.0.1:5000" class="cta-btn">Try Stock Oracle Now</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <footer class="app-footer">
+            <div class="container-fluid">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle Logo" class="footer-logo">
+                        <p class="footer-tagline">Predict the future with AI-powered precision</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3 class="footer-heading">Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="http://127.0.0.1:5000">Home</a></li>
+                            <li><a href="http://127.0.0.1:5000">Predict</a></li>
+                            <li><a href="http://127.0.0.1:5000">Dashboard</a></li>
+                            <li><a href="http://127.0.0.1:5000/about">About</a></li>
+                            <li><a href="http://127.0.0.1:5000">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3 class="footer-heading">Resources</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">API Documentation</a></li>
+                            <li><a href="#">Knowledge Base</a></li>
+                            <li><a href="#">Market Insights</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Research Papers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3 class="footer-heading">Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Disclaimer</a></li>
+                            <li><a href="#">Data Protection</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p class="copyright">© 2025 Stock Oracle. All rights reserved.</p>
+                    <p class="disclaimer">Stock Oracle provides analysis and predictions for educational purposes only. Trading stocks carries risk. Past performance does not guarantee future results.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const closeNav = document.getElementById('closeNav');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileNavOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeNav.addEventListener('click', function() {
+                mobileNavOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    const currentlyActive = document.querySelector('.faq-item.active');
+                    
+                    if(currentlyActive && currentlyActive !== item) {
+                        currentlyActive.classList.remove('active');
+                    }
+                    
+                    item.classList.toggle('active');
+                });
+            });
+            
+            const svgWidth = 1440;
+            const svgHeight = 900;
+            const verticalLinesGroup = document.getElementById('verticalLines');
+            const horizontalLinesGroup = document.getElementById('horizontalLines');
+            
+            for (let i = 0; i <= svgWidth; i += 50) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', i);
+                line.setAttribute('y1', 0);
+                line.setAttribute('x2', i);
+                line.setAttribute('y2', svgHeight);
+                verticalLinesGroup.appendChild(line);
+            }
+            
+            for (let i = 0; i <= svgHeight; i += 50) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', 0);
+                line.setAttribute('y1', i);
+                line.setAttribute('x2', svgWidth);
+                line.setAttribute('y2', i);
+                horizontalLinesGroup.appendChild(line);
+            }
+            
+            const chartPatterns = document.getElementById('chartPatterns');
+            const chartTypes = ['line', 'candlestick', 'bar'];
+            
+            for (let i = 0; i < 5; i++) {
+                const chartType = chartTypes[Math.floor(Math.random() * chartTypes.length)];
+                const x = Math.random() * svgWidth;
+                const y = Math.random() * svgHeight;
+                const width = 100 + Math.random() * 200;
+                const height = 50 + Math.random() * 100;
+                
+                if (chartType === 'line') {
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    let d = `M ${x} ${y + height/2}`;
+                    
+                    for (let j = 1; j <= 10; j++) {
+                        const pointX = x + (width/10) * j;
+                        const pointY = y + height/2 + (Math.random() * height/2 - height/4);
+                        d += ` L ${pointX} ${pointY}`;
+                    }
+                    
+                    path.setAttribute('d', d);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#4361EE');
+                    path.setAttribute('stroke-width', '2');
+                    chartPatterns.appendChild(path);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

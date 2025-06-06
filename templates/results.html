@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Stock Oracle - Advanced Stock Price Prediction Tool">
+    <meta name="author" content="Stock Oracle">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='stockOracle3.png') }}">
+    <title>Stock Oracle</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap.min-RES.css') }}" rel="stylesheet">
+    
+    <link href="{{ url_for('static', filename='stock-oracle-styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="svg-background">
+            <svg class="bg-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4CC9F0" stop-opacity="0.05" />
+                        <stop offset="50%" stop-color="#4361EE" stop-opacity="0.03" />
+                        <stop offset="100%" stop-color="#3A0CA3" stop-opacity="0.05" />
+                    </linearGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#mainGradient)"/>
+                <g stroke="#3A0CA3" stroke-width="1" opacity="0.07">
+                    <g id="verticalLines"></g>
+                    <g id="horizontalLines"></g>
+                </g>
+                <g id="chartPatterns" opacity="0.2" filter="url(#glow)"></g>
+            </svg>
+        </div>
+
+        <header class="app-header">
+            <div class="container-fluid">
+                <div class="header-content">
+                    <div class="logo-container">
+                        <a href="http://localhost/www/wordpress-5.6.2/wordpress/">
+                            <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle Logo" class="logo">
+                            <span class="logo-text">Stock Oracle</span>
+                        </a>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="http://127.0.0.1:5000"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="http://127.0.0.1:5000" class="active"><i class="fas fa-chart-line"></i> Predict</a></li>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                            <li><a href="http://127.0.0.1:5000/about"><i class="fas fa-info-circle"></i> About</a></li>
+                            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/home-2/#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="mobile-nav-overlay" id="mobileNavOverlay">
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-header">
+                    <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle Logo" class="mobile-logo">
+                    <button class="close-nav" id="closeNav">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/"><i class="fas fa-home"></i> HOME</a></li>
+                        <li><a href="http://127.0.0.1:5000" class="active"><i class="fas fa-chart-line"></i> PREDICT THE FUTURE</a></li>
+                        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/dashboard"><i class="fas fa-tachometer-alt"></i> DASHBOARD</a></li>
+                        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/know-more/"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+                        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/home-2/#contact"><i class="fas fa-envelope"></i> CONTACT US</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-wrapper">
+                <div class="page-title">
+                    <div class="stock-badge">{{quote}}</div>
+                    <h1>TODAY'S STOCK ANALYSIS</h1>
+                </div>
+
+                <div class="stock-data-cards">
+                    <div class="card primary-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                            <div class="card-info">
+                                <h2>{{open_s}}</h2>
+                                <p>OPEN</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card warning-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="card-info">
+                                <h2>{{high_s}}</h2>
+                                <p>HIGH</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card success-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="card-info">
+                                <h2>{{low_s}}</h2>
+                                <p>LOW</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card danger-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-door-closed"></i>
+                            </div>
+                            <div class="card-info">
+                                <h2>{{close_s}}</h2>
+                                <p>CLOSE</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card primary-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="card-info">
+                                <h2>{{vol}}</h2>
+                                <p>VOLUME</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-chart-line"></i> RECENT TRENDS IN {{quote}}</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='Trends.png')}}" alt="Stock Trends">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-chart-area"></i> ARIMA MODEL ACCURACY</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='ARIMA.png')}}" alt="ARIMA Model">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-brain"></i> LSTM MODEL ACCURACY</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='LSTM.png')}}" alt="LSTM Model">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-chart-line"></i> LINEAR REGRESSION ACCURACY</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='LR.png')}}" alt="Linear Regression Model">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-chart-line"></i> GRU MODEL ACCURACY</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='GRU.png')}}" alt="Linear Regression Model">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3><i class="fas fa-chart-line"></i>IMPROVED TRANSFORMER MODEL ACCURACY</h3>
+                            </div>
+                            <div class="chart-body">
+                                <img src="{{url_for('static', filename='ImprovedTransformer.png')}}" alt="Linear Regression Model">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="predictions-section">
+                    <h2 class="section-title"><i class="fas fa-magic"></i> TOMORROW'S {{quote}} PREDICTIONS</h2>
+                    <div class="prediction-cards">
+                        <div class="prediction-card success-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                <div class="card-info">
+                                    <p>ARIMA</p>
+                                    <h2>{{arima_pred}}</h2>
+                                    <span class="error-badge">RMSE: {{error_arima}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="prediction-card warning-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="card-info">
+                                    <p>LSTM</p>
+                                    <h2>{{lstm_pred}}</h2>
+                                    <span class="error-badge">RMSE: {{error_lstm}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="prediction-card danger-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="card-info">
+                                    <p>LINEAR REGRESSION</p>
+                                    <h2>{{lr_pred}}</h2>
+                                    <span class="error-badge">RMSE: {{error_lr}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prediction-card primary-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="card-info">
+                                    <p>GRU</p>
+                                    <h2>{{gru_pred}}</h2>
+                                    <span class="error-badge">RMSE: {{error_gru}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prediction-card danger-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="card-info">
+                                    <p>TRANSFORMER</p>
+                                    <h2>{{imp_transformer_pred}}</h2>
+                                    <span class="error-badge">RMSE: {{error_imp_transformer}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-section">
+                    <h2 class="section-title"><i class="fas fa-table"></i> MODELS COMPARISON (ERROR METRICS)</h2>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>RMSE</th>
+                                <th>MAE</th>
+                                <th>MAPE (%)</th>
+                                <th>R²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ARIMA</td>
+                                <td>{{metrics_arima.rmse}}</td>
+                                <td>{{metrics_arima.mae}}</td>
+                                <td>{{metrics_arima.mape}}</td>
+                                <td>{{metrics_arima.r2}}</td>
+                            </tr>
+                            <tr>
+                                <td>LSTM</td>
+                                <td>{{metrics_lstm.rmse}}</td>
+                                <td>{{metrics_lstm.mae}}</td>
+                                <td>{{metrics_lstm.mape}}</td>
+                                <td>{{metrics_lstm.r2}}</td>
+                            </tr>
+                            <tr>
+                                <td>GRU</td>
+                                <td>{{metrics_gru.rmse}}</td>
+                                <td>{{metrics_gru.mae}}</td>
+                                <td>{{metrics_gru.mape}}</td>
+                                <td>{{metrics_gru.r2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Regression</td>
+                                <td>{{metrics_lr.rmse}}</td>
+                                <td>{{metrics_lr.mae}}</td>
+                                <td>{{metrics_lr.mape}}</td>
+                                <td>{{metrics_lr.r2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Transformer</td>
+                                <td>{{metrics_transformer.rmse}}</td>
+                                <td>{{metrics_transformer.mae}}</td>
+                                <td>{{metrics_transformer.mape}}</td>
+                                <td>{{metrics_transformer.r2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="sentiment-forecast-section">
+                    <div class="sentiment-container">
+                        <div class="sentiment-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-comment-alt"></i> SOCIAL MEDIA SENTIMENT FOR {{quote}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <img src="{{url_for('static', filename='SA.png')}}" alt="Sentiment Analysis">
+                                <div class="polarity-indicator">
+                                    <span>OVERALL TWEETS POLARITY:</span>
+                                    <strong>{{tw_pol}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="forecast-container">
+                        <div class="forecast-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-calendar-alt"></i> 5-DAY PRICE FORECAST</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="forecast-content">
+                                    <div class="forecast-icon">
+                                        <img src="{{url_for('static', filename='fore.png')}}" alt="Forecast">
+                                    </div>
+                                    <div class="forecast-data">
+                                        {% for row in forecast_set %}
+                                        <div class="forecast-item">
+                                            <span class="forecast-date">Day {{loop.index}}</span>
+                                            <span class="forecast-price">{{row[0]}}</span>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tweets-section">
+                    <div class="tweets-card">
+                        <div class="card-header">
+                            <h3><i class="fab fa-twitter"></i> RECENT TWEETS ABOUT {{quote}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="tweet-list">
+                                {% for i in range(0,10) %}
+                                <div class="tweet-item">
+                                    <div class="tweet-icon">
+                                        <img src="{{url_for('static', filename='twitter-logo.png')}}" alt="Twitter">
+                                    </div>
+                                    <div class="tweet-content">
+                                        <p>{{tw_list[i]}}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation-section">
+                    <div class="recommendation-card primary-card">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                             <div class="card-info">
+                                <h3>OUR RECOMMENDATION</h3>
+                                <h2>Based on machine learning predictions and tweet sentiment analysis, 
+                                    {% if idea and idea is not none and idea|string != 'nan' %}
+                                        a {{idea}} trend is anticipated for {{quote}} stock → Recommendation: {{decision}}
+                                    {% else %}
+                                        not enough data is available to provide a reliable recommendation.
+                                    {% endif %}
+                                </h2>                    
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <img src="{{url_for('static', filename='stockOracle3.png')}}" alt="Stock Oracle" class="footer-logo">
+                        <p>Stock Oracle was started with a common goal of serving the finance community while they make transitions. All our team members bring to table their unique expertise and experience of stock market which they would like to pass on to future investors.</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-map-marker-alt"></i> Stock Oracle, Office 206, Hubtown Solaris, Prof. NS Phadke Road, Churchgate (E) Mumbai, Maharashtra, India</li>
+                            <li><i class="fas fa-envelope"></i> info@stockoracle.com</li>
+                            <li><i class="fas fa-phone"></i> +91 98 19384052</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="quick-links">
+                            <li><a href="http://127.0.0.1:5000"><i class="fas fa-arrow-right"></i> HOME</a></li>
+                            <li><a href="http://127.0.0.1:5000"><i class="fas fa-arrow-right"></i> DASHBOARD</a></li>
+                            <li><a href="http://127.0.0.1:5000/about"><i class="fas fa-arrow-right"></i> ABOUT</a></li>
+                            <li><a href="http://127.0.0.1:5000"><i class="fas fa-arrow-right"></i> CONTACT US</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Location</h3>
+                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25736.700143278166!2d24.006707!3d49.841952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add6c2b0d24d3%3A0xb2642ed6e814d555!2z0JvRg9Cz0LDQtNC40L3QsA!5e0!3m2!1sen!2sua!4v1714731123456!5m2!1sen!2sua"; width="100%" height="100%" style="border:0;" allowfullscreen="false"></iframe>
+                    </div>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Stock Oracle. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{url_for('static', filename='jquery-RES.min.js')}}"></script>
+    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bootstrap-RES.min.js')}}"></script>
+    <script src="{{url_for('static', filename='stock-oracle-scripts.js')}}"></script>
+</body>
+</html>
